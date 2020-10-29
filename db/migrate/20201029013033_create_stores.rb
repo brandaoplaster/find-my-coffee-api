@@ -1,7 +1,7 @@
 class CreateStores < ActiveRecord::Migration[6.0]
   def change
     create_table :stores do |t|
-      t.st_point :lonlat, geographic: true
+      t.st_point :lonlat, geography: true
       t.string :name
       t.string :address
       t.string :google_place_id
