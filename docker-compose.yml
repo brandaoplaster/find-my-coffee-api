@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  db-postgis:
+    image: 'mdillon/postgis'
+    volumes:
+      - 'db-postgis:/var/lib/postgresql/data'
+    ports:
+      - "5432"
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
+
+  webservice:
+    depends_on:
+      - 'db-postgis'
+    build: .
+    command: bash start.sh
+    ports:
+      - '3000:3000'
+    volumes:
+      - '.:/find-my-coffee-api'
+      - 'box:/box'
+    stdin_open: true
+    tty: true
+
+  box:
+    image: busybox
+    volumes:
+      - box:/box
+
+volumes:
+  db-postgis:
+  box:
